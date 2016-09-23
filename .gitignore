@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+# temp/config files by OS X Finder, vim/gVim, Visual Studio Code
+.DS_Store
+.vscode

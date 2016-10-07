@@ -19,7 +19,7 @@ int length(struct node *head);
 void print(struct node *head);
 
 int main(void) {
-	struct node *head;
+	struct node *head, *top;
 
 	init(&head);
 	add(&head, 2);

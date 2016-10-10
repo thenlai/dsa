@@ -71,7 +71,7 @@ function midorder(tree) {
 	console.log(tree.value);
 	midorder(tree.right);
 }
-console.log('\nmid order:')
+console.log('\nmid order:');
 midorder(tree);
 
 
@@ -83,7 +83,7 @@ function preorder(tree) {
 	preorder(tree.left);
 	preorder(tree.right);
 }
-console.log('pre order:')
+console.log('\npre order:');
 preorder(tree);
 
 
@@ -95,5 +95,131 @@ function postorder(tree) {
 	postorder(tree.right);
 	console.log(tree.value);
 }
-console.log('\npost order:')
+console.log('\npost order:');
 postorder(tree);
+
+// # level order 广度优先遍历
+function levelorder(tree) {
+	if(!tree) {
+		throw new Error('Empty tree')
+	}
+
+	var queue = [];
+	queue.push(tree);
+	while(queue.length !== 0) {
+		node = queue.shift();
+		console.log(node.value);
+		if(node.hasLeft()) queue.push(node.left);
+		if(node.hasRight()) queue.push(node.right);
+	}
+}
+console.log('\nlevel order:')
+levelorder(tree);
+
+// # Morris traversal
+function morrsPreorder(tree) {
+	if(!tree) {
+		return;
+	}
+	var c1 = tree, c2 = null;
+	while(c1) {
+		c2 = c1.left;
+		if(c2) {
+			while(c2.right && c2.right !== c1) {
+				c2 = c2.right;
+			}
+			if(!c2.right) {
+				c2.right = c1;
+				console.log(c1.value);
+
+				c1 = c1.left;
+				continue;
+			} else {
+				c2.right = null;
+			}
+		} else {
+			console.log(c1.value);
+		}
+		c1 = c1.right;
+	}
+}
+console.log('\nMorris pre order:')
+morrsPreorder(tree);
+
+// # Morris Inorder
+function morrsInorder(tree) {
+	if(!tree) {
+		return;
+	}
+	var c1 = tree, c2 = null;
+	while(c1) {
+		c2 = c1.left;
+		if(c2) {
+			while(c2.right && c2.right !== c1) {
+				c2 = c2.right;
+			}
+			if(!c2.right) {
+				c2.right = c1;
+				c1 = c1.left;
+				continue;
+			} else {
+				c2.right = null;
+			}
+		}
+		console.log(c1.value);
+		c1 = c1.right;
+	}
+}
+console.log('\nMorris in-order:')
+morrsInorder(tree);
+
+// Morris post order
+function morrsPostorder(tree) {
+	if(!tree) {
+		return;
+	}
+	var c1 = tree, c2 = null;
+	while(c1) {
+		c2 = c1.left;
+		if(c2) {
+			while(c2.right && c2.right !== c1) {
+				c2 = c2.right;
+			}
+			if(!c2.right) {
+				c2.right = c1;
+				c1 = c1.left;
+				continue;
+			} else {
+				c2.right = null;
+				// print edge
+				printEdge(c1.left);
+			}
+		}
+		c1 = c1.right;
+	}
+	printEdge(head);
+}
+var printEdge = function(head) {
+  var tail = reverseEdge(head)
+  var cur = tail
+  while(cur) {
+    console.log(cur.value)
+    cur = cur.right
+  }
+  reverseEdge(tail)
+}
+
+var reverseEdge = function(head) {
+  var pre = null,
+      next = null
+  while(head) {
+    next = head.right
+    head.right = pre
+    pre = head
+    head = next
+  }
+  return pre
+}
+
+console.log('\nMorris in-order:')
+morrsPostorder(tree);
